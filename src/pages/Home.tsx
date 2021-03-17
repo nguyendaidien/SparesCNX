@@ -1,14 +1,21 @@
-import React from 'react';
-import Part from '../components/Part';
+import React, { useContext } from 'react'
+import Part from '../components/Part'
+import { PartContext } from '../state/part/context';
 
 const Home = () => {
+  const partContext = useContext(PartContext)
+  const {
+    selectors: { allParts }
+  } = partContext
+  const parts = allParts()
+
   return (
     <div>
-      These parts are hard-coded; they should be removed.
-      <Part name="Test part" id={123} status="Checked In" />
-      <Part name="Another part" id={456} status="Checked Out" />
+      {parts.map((s, idx) => (
+        <Part name={s.name} id={s.id} status={s.status} />
+      ))}
     </div>
-  );
-};
+  )
+}
 
-export default Home;
+export default Home
